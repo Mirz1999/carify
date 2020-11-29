@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:carify/utilities/size_config.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -11,107 +13,118 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return SafeArea(
       child: Scaffold(
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Transform.scale(
-              scale: 1.5,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 3,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/background_1.png'),
-                      fit: BoxFit.cover),
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                        top: 60.0,
-                        left: 90.0,
+              scale: 1.15,
+              child: Transform.translate(
+                offset: Offset(0, -SizeConfig.safeBlockVertical * 7.5),
+                child: Container(
+                  width: SizeConfig.safeBlockHorizontal * 100,
+                  height: SizeConfig.safeBlockVertical * 40,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/background_1.png'),
+                        fit: BoxFit.cover),
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: SizeConfig.safeBlockVertical * 5,
+                        left: 50,
                         child: Icon(
                           Icons.chevron_left,
                           color: Colors.white,
-                        )),
-                    Positioned(
-                      top: 70.0,
-                      left: 50.0,
-                      right: 50.0,
-                      child: Column(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/images/carify_logo.svg',
-                            height: 50.0,
-                            width: 50.0,
-                          ),
-                          Text(
-                            'Carify',
-                            style: GoogleFonts.lemonada(
-                                fontSize: 20.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w300),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'DECIDE',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 11.0,
-                                    letterSpacing: 2.0),
-                              ),
-                              SizedBox(
-                                width: 10.0,
-                              ),
-                              Text(
-                                'COMMIT',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 11.0,
-                                  letterSpacing: 2.0,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10.0,
-                              ),
-                              Text(
-                                'SUCCEED',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 11.0,
-                                  letterSpacing: 2.0,
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
+                        ),
                       ),
-                    )
-                  ],
+                      Positioned(
+                        top: SizeConfig.safeBlockVertical * 12,
+                        left: SizeConfig.safeBlockHorizontal * 30,
+                        right: SizeConfig.safeBlockHorizontal * 30,
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              'assets/images/carify_logo.svg',
+                              // height: SizeConfig.safeBlockVertical * 12,
+                              width: SizeConfig.safeBlockHorizontal * 40,
+                            ),
+                            Text(
+                              'Carify',
+                              style: GoogleFonts.lemonada(
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 7.5,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: SizeConfig.safeBlockVertical * 30,
+                        left: SizeConfig.safeBlockHorizontal * 20,
+                        right: SizeConfig.safeBlockHorizontal * 20,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'DECIDE',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 11.0,
+                                  letterSpacing: 2.0),
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text(
+                              'COMMIT',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 11.0,
+                                letterSpacing: 2.0,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text(
+                              'SUCCEED',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 11.0,
+                                letterSpacing: 2.0,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      ),
+                      Positioned(
+                        top: SizeConfig.safeBlockVertical * 35,
+                        left: SizeConfig.safeBlockHorizontal * 35,
+                        right: SizeConfig.safeBlockHorizontal * 35,
+                        child: Center(
+                          child: Text(
+                            'Login',
+                            style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 8, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-            SizedBox(
-              height: 40.0,
-            ),
-            Text(
-              'Login',
-              style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 30.0,
-            ),
             Container(
-              width: 350.0,
-              height: 60.0,
+              width: SizeConfig.safeBlockHorizontal * 95,
+              height: SizeConfig.safeBlockVertical * 8,
               child: TextField(
                 showCursor: false,
                 decoration: InputDecoration(
@@ -132,11 +145,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(
-              height: 20.0,
+              height: SizeConfig.safeBlockVertical * 2,
             ),
             Container(
-              width: 350.0,
-              height: 60.0,
+              width: SizeConfig.safeBlockHorizontal * 95,
+              height: SizeConfig.safeBlockVertical * 8,
               child: TextField(
                 showCursor: false,
                 decoration: InputDecoration(
@@ -157,12 +170,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(
-              height: 20.0,
+              height: SizeConfig.safeBlockVertical * 10,
             ),
             Container(
-              margin: EdgeInsets.only(left: 20.0, right: 20.0),
-              width: 330.0,
-              height: 50.0,
+              margin: EdgeInsets.symmetric(horizontal: SizeConfig.safeBlockHorizontal * 7),
+              width: SizeConfig.safeBlockHorizontal * 95,
+              height: SizeConfig.safeBlockVertical * 7.5,
               child: RawMaterialButton(
                   padding: EdgeInsets.only(left: 15.0, right: 15.0),
                   shape: RoundedRectangleBorder(
@@ -171,13 +184,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   fillColor: Color(0xFFF77B00),
                   textStyle: TextStyle(
                     color: Colors.white,
-                    fontSize: 18.0,
+                    fontSize: SizeConfig.safeBlockHorizontal * 5,
                     fontWeight: FontWeight.bold,
                   ),
                   onPressed: () {}),
             ),
             SizedBox(
-              height: 20.0,
+              height: SizeConfig.safeBlockVertical * 3,
             ),
             RichText(
               text: TextSpan(
@@ -193,20 +206,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   ]),
             ),
             SizedBox(
-              height: 40.0,
+              height: SizeConfig.safeBlockVertical * 5,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  height: 1.0,
-                  width: 150.0,
+                  height: SizeConfig.safeBlockVertical * 0.15,
+                  width: SizeConfig.safeBlockHorizontal * 40,
                   color: Colors.black,
                 ),
-                SvgPicture.asset('assets/images/icon_clipboard.svg'),
+                SvgPicture.asset('assets/images/icon_clipboard.svg',width:SizeConfig.safeBlockHorizontal * 15,),
                 Container(
-                  height: 1.0,
-                  width: 150.0,
+                  height: SizeConfig.safeBlockVertical * 0.15,
+                  width: SizeConfig.safeBlockHorizontal * 40,
                   color: Colors.black,
                 ),
               ],
