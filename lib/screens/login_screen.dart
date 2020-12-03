@@ -1,8 +1,12 @@
+import 'package:carify/screens/register_screen.dart';
+import 'package:carify/utilities/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:carify/utilities/size_config.dart';
+import 'package:carify/utilities/extracted_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -11,6 +15,8 @@ class LoginScreen extends StatefulWidget {
 
 //TODO REFACTORING
 class _LoginScreenState extends State<LoginScreen> {
+  bool showPassword = true;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -34,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Stack(
                     children: [
                       Positioned(
-                        top: SizeConfig.safeBlockVertical * 5,
+                        top: SizeConfig.safeBlockVertical * 10,
                         left: 50,
                         child: Icon(
                           Icons.chevron_left,
@@ -53,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: SizeConfig.safeBlockHorizontal * 40,
                             ),
                             Text(
-                              'Carify',
+                              'Carify', //TODO Choose a font and add it into yaml file + Refactor the styles in the constant file
                               style: GoogleFonts.lemonada(
                                   fontSize:
                                       SizeConfig.safeBlockHorizontal * 7.5,
@@ -72,39 +78,24 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             Text(
                               'DECIDE',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 11.0,
-                                  letterSpacing: 2.0),
+                              style: kSloganTextStyle,
                             ),
                             SizedBox(
                               width: 10.0,
                             ),
                             Text(
                               'COMMIT',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11.0,
-                                letterSpacing: 2.0,
-                              ),
+                              style: kSloganTextStyle,
                             ),
                             SizedBox(
                               width: 10.0,
                             ),
                             Text(
                               'SUCCEED',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11.0,
-                                letterSpacing: 2.0,
-                              ),
+                              style: kSloganTextStyle,
                             ),
                           ],
                         ),
-
                       ),
                       Positioned(
                         top: SizeConfig.safeBlockVertical * 35,
@@ -113,7 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Center(
                           child: Text(
                             'Login',
-                            style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 8, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 8,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -123,57 +116,40 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
               width: SizeConfig.safeBlockHorizontal * 95,
               height: SizeConfig.safeBlockVertical * 8,
-              child: TextField(
-                showCursor: false,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.person_outline,
-                    color: Colors.black,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  hintText: 'Username',
-                  hintStyle: TextStyle(fontSize: 17.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                ),
+              child: InputFields(
+                hintText: 'Username',
+                prefixIcon: Icons.person_outline_sharp,
               ),
             ),
             SizedBox(
               height: SizeConfig.safeBlockVertical * 2,
             ),
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
               width: SizeConfig.safeBlockHorizontal * 95,
               height: SizeConfig.safeBlockVertical * 8,
-              child: TextField(
-                showCursor: false,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.lock_outline,
-                    color: Colors.black,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  hintText: 'Password',
-                  hintStyle: TextStyle(fontSize: 17.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                ),
+              decoration: BoxDecoration(),
+              child: InputPasswordFields(
+                hintText: 'Password',
+                showPassword: !showPassword,
+                prefixIcon: Icons.lock_outline_sharp,
+                suffixIcon: showPassword
+                    ? Icons.visibility
+                    : Icons.visibility_off_rounded,
+                onPressed: () {
+                  setState(() => showPassword = !showPassword);
+                },
               ),
             ),
             SizedBox(
               height: SizeConfig.safeBlockVertical * 10,
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: SizeConfig.safeBlockHorizontal * 7),
+              margin: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.safeBlockHorizontal * 7),
               width: SizeConfig.safeBlockHorizontal * 95,
               height: SizeConfig.safeBlockVertical * 7.5,
               child: RawMaterialButton(
@@ -181,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                   child: Text('Login'),
-                  fillColor: Color(0xFFF77B00),
+                  fillColor: kOrangeCustom, //TODO REFACTOR
                   textStyle: TextStyle(
                     color: Colors.white,
                     fontSize: SizeConfig.safeBlockHorizontal * 5,
@@ -195,14 +171,18 @@ class _LoginScreenState extends State<LoginScreen> {
             RichText(
               text: TextSpan(
                   text: 'Want to create an account ? ',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: kMidnightBlueCustom),
                   children: <TextSpan>[
                     TextSpan(
                         text: 'Sign Up',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFF77B00),
-                        ))
+                        style: kSignUpTextStyle,
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterScreen()));
+                          }),
                   ]),
             ),
             SizedBox(
@@ -214,13 +194,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   height: SizeConfig.safeBlockVertical * 0.15,
                   width: SizeConfig.safeBlockHorizontal * 40,
-                  color: Colors.black,
+                  color: kMidnightBlueCustom,
                 ),
-                SvgPicture.asset('assets/images/icon_clipboard.svg',width:SizeConfig.safeBlockHorizontal * 15,),
+                SvgPicture.asset(
+                  'assets/images/icon_clipboard.svg',
+                  width: SizeConfig.safeBlockHorizontal * 15,
+                ),
                 Container(
                   height: SizeConfig.safeBlockVertical * 0.15,
                   width: SizeConfig.safeBlockHorizontal * 40,
-                  color: Colors.black,
+                  color: kMidnightBlueCustom,
                 ),
               ],
             ),
