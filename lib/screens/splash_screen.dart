@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:carify/utilities/constants.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
@@ -31,8 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
             end: Alignment.bottomCenter,
             stops: [0.1, 1],
             colors: [
-              const Color(0xFF284B63),
-              const Color(0xFF080F14),
+              kDarkBlueCustom,
+              kMidnightBlueCustom,
             ],
           ),
         ),
@@ -41,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             SvgPicture.asset('assets/images/carify_logo.svg'),
             Text(
-              'Carify',
+              'Carify', //TODO Choose a font and add it into yaml file + Refactor the styles in the constant file
               style: GoogleFonts.lemonada(
                   fontSize: 50.0,
                   color: Colors.white,
@@ -58,35 +59,18 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 Text(
                   'DECIDE',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 21.0,
-                      letterSpacing: 2.0),
+                  style: kSloganTextStyle,
                 ),
                 SizedBox(
                   width: 10.0,
                 ),
-                Text(
-                  'COMMIT',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 21.0,
-                    letterSpacing: 2.0,
-                  ),
-                ),
+                Text('COMMIT', style: kSloganTextStyle),
                 SizedBox(
                   width: 10.0,
                 ),
                 Text(
                   'SUCCEED',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 21.0,
-                    letterSpacing: 2.0,
-                  ),
+                  style: kSloganTextStyle,
                 ),
               ],
             )
