@@ -1,4 +1,6 @@
 import 'package:carify/screens/login_screen.dart';
+import 'package:carify/screens/profile_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,13 +13,34 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+User user = _auth.currentUser;
+
+Future<User> getUser() {
+  return Future.value(user);
+}
+
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(
-        Duration(seconds: 3),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginScreen())));
+    // Timer(
+    //     Duration(seconds: 3),
+    //     () => Navigator.pushReplacement(
+    //         context, MaterialPageRoute(builder: (context) => LoginScreen())));
+//TODO Fixes should be done to get the current user to run the application uncomment the above function and comment the FutureBuilder
+    FutureBuilder<User>(
+      future: getUser(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          User user = snapshot.data;
+          return ProfileScreen(
+            user: user.uid,
+          );
+        } else {
+          return LoginScreen();
+        }
+      },
+    );
 
     super.initState();
   }
@@ -48,12 +71,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   color: Colors.white,
                   fontWeight: FontWeight.w300),
             ),
-            // Divider(
-            //   indent: 100.0,
-            //   endIndent: 100.0,
-            //   color: Colors.white60,
-            //   thickness: 1.0,
-            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
