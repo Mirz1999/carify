@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:carify/utilities/user_authentication.dart';
 import 'package:carify/screens/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   //Fields
   bool showPassword = false;
   String _email, _password;
-  User user = FirebaseAuth.instance.currentUser;
+  AuthenticationService _authenticationService;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -172,11 +173,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           OutlineButton(
             splashColor: kMidnightBlueCustom,
             onPressed: () async {
-              googleSignIn().whenComplete(
-                  () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => ProfileScreen(
-                            user: user.uid,
-                          ))));
+              await _authenticationService.googleSignIn();
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => ProfileScreen()));
             },
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
@@ -218,14 +217,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 fontSize: SizeConfig.safeBlockHorizontal * 5,
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    signUp(_email, _password).then((value) {
-                      if (value != null) {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => ProfileScreen(
-                                  user: value.uid,
-                                )));
-                      }
-                    });
+                    await _authenticationService.signUp(
+                        email: _email, password: _password);
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => ProfileScreen()));
                   } else {
                     print('not validated');
                   }

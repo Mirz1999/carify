@@ -1,48 +1,40 @@
+import 'dart:async';
+
 import 'package:carify/screens/login_screen.dart';
 import 'package:carify/screens/profile_screen.dart';
+import 'package:carify/utilities/user_authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:carify/utilities/constants.dart';
-import 'dart:async';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
-User user = _auth.currentUser;
-
-Future<User> getUser() {
-  return Future.value(user);
-}
-
 class _SplashScreenState extends State<SplashScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User user;
   @override
   void initState() {
-    // Timer(
-    //     Duration(seconds: 3),
-    //     () => Navigator.pushReplacement(
-    //         context, MaterialPageRoute(builder: (context) => LoginScreen())));
-//TODO Fixes should be done to get the current user to run the application uncomment the above function and comment the FutureBuilder
-    FutureBuilder<User>(
-      future: getUser(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          User user = snapshot.data;
-          return ProfileScreen(
-            user: user.uid,
-          );
-        } else {
-          return LoginScreen();
-        }
-      },
-    );
-
+    displaySplash();
     super.initState();
+  }
+
+  displaySplash() {
+    Timer(Duration(seconds: 3), () {
+      if (_auth.currentUser != null) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      }
+    });
   }
 
   @override

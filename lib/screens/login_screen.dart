@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:carify/utilities/size_config.dart';
 import 'package:carify/utilities/extracted_widget.dart';
 import 'package:carify/utilities/user_authentication.dart';
+import 'package:provider/provider.dart';
 import 'package:carify/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -21,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //Fields
   bool showPassword = false;
   String _email, _password;
+  AuthenticationService _authenticationService;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -169,16 +171,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: SizeConfig.safeBlockHorizontal * 5,
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                await login(_email, _password).then((value) {
-                                  if (value != null)
-                                    Navigator.of(context)
-                                        .pushReplacement(MaterialPageRoute(
-                                            builder: (context) => ProfileScreen(
-                                                  user: value.uid,
-                                                )));
-                                });
-                              } else {
-                                print('not validated');
+                                try {
+                                  final user =
+                                      await _authenticationService.login(
+                                          email: _email, password: _password);
+                                  if (user != null) {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProfileScreen()));
+                                  }
+                                } catch (e) {
+                                  print('mamnou3 d5oul!');
+                                }
                               }
                             }),
                       ),
