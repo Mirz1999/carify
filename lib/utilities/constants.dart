@@ -34,7 +34,21 @@ const kInputTextDecoration = InputDecoration(
     borderSide: BorderSide(color: kMidnightBlueCustom, width: 2.5),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: kDarkBlueCustom, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+    borderSide: BorderSide(color: kDarkBlueCustom, width: 1.5),
+    borderRadius: BorderRadius.all(Radius.circular(25.0)),
   ),
+);
+
+//Container Decorations
+var kInputTextFieldDecoration = BoxDecoration(
+  borderRadius: BorderRadius.all(Radius.circular(25.0)),
+  color: Colors.white,
+  boxShadow: [
+    BoxShadow(
+      color: Colors.grey.withOpacity(0.5),
+      spreadRadius: 2,
+      blurRadius: 3,
+      offset: Offset(0, 2),
+    ),
+  ],
 );

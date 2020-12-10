@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "500464888317",
+    "project_id": "carify-c8416",
+    "storage_bucket": "carify-c8416.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500464888317:android:cb15c783bdac2f39cfd194",
+        "android_client_info": {
+          "package_name": "com.flutterflub.carify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500464888317-mde7nferub8gn37en1d6lpf79lqj9b0l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutterflub.carify",
+            "certificate_hash": "0d5b7dce11bceedb4b0ec3b4743c7eab87b42fb6"
+          }
+        },
+        {
+          "client_id": "500464888317-51esjajj9e3q8hg2f5rjbmr1e427qgcr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiooyasrTteWYmz84KVwVGkv2hhTrDLiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500464888317-51esjajj9e3q8hg2f5rjbmr1e427qgcr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

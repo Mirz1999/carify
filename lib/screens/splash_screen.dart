@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:carify/screens/login_screen.dart';
+import 'package:carify/screens/profile_screen.dart';
+import 'package:carify/utilities/user_authentication.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:carify/utilities/constants.dart';
-import 'dart:async';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,14 +17,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User user;
   @override
   void initState() {
-    Timer(
-        Duration(seconds: 3),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginScreen())));
-
+    displaySplash();
     super.initState();
+  }
+
+  displaySplash() {
+    Timer(Duration(seconds: 3), () {
+      if (_auth.currentUser != null) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      }
+    });
   }
 
   @override
@@ -48,12 +63,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   color: Colors.white,
                   fontWeight: FontWeight.w300),
             ),
-            // Divider(
-            //   indent: 100.0,
-            //   endIndent: 100.0,
-            //   color: Colors.white60,
-            //   thickness: 1.0,
-            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

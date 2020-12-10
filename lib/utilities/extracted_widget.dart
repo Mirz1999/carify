@@ -1,24 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:carify/utilities/constants.dart';
-//TODO Extract the necessary widgets
 
+//Input Field
+class InputFields extends StatelessWidget {
+  final String hintText;
+  final IconData prefixIcon;
+  final Function validatorFunction;
+  final Function saveFunction;
+
+  InputFields(
+      {@required this.hintText,
+      @required this.prefixIcon,
+      this.validatorFunction,
+      this.saveFunction});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+        onChanged: saveFunction,
+        validator: validatorFunction,
+        showCursor: false,
+        decoration: kInputTextDecoration.copyWith(
+          hintText: hintText,
+          prefixIcon: Icon(
+            prefixIcon,
+            color: kDarkBlueCustom,
+          ),
+        ));
+  }
+}
+
+//Input Password Field
 class InputPasswordFields extends StatelessWidget {
   final bool showPassword;
   final String hintText;
   final IconData prefixIcon;
   final IconData suffixIcon;
   final Function onPressed;
+  final Function validatorFunction;
+  final Function saveFunction;
 
   InputPasswordFields(
       {@required this.showPassword,
       @required this.hintText,
       @required this.prefixIcon,
       this.suffixIcon,
-      this.onPressed});
+      this.onPressed,
+      this.validatorFunction,
+      this.saveFunction});
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+        onChanged: saveFunction,
+        validator: validatorFunction,
         showCursor: false,
         obscureText: showPassword,
         decoration: kInputTextDecoration.copyWith(
@@ -34,26 +69,31 @@ class InputPasswordFields extends StatelessWidget {
         ));
   }
 }
+//Rounded Button
 
-class InputFields extends StatelessWidget {
-  final String hintText;
-  final IconData prefixIcon;
+class RoundedButton extends StatelessWidget {
+  final String buttonText;
+  final double fontSize;
+  final Function onPressed;
 
-  InputFields({
-    @required this.hintText,
-    @required this.prefixIcon,
-  });
+  RoundedButton(
+      {@required this.buttonText,
+      @required this.fontSize,
+      @required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-        showCursor: false,
-        decoration: kInputTextDecoration.copyWith(
-          hintText: hintText,
-          prefixIcon: Icon(
-            prefixIcon,
-            color: kDarkBlueCustom,
-          ),
-        ));
+    return RawMaterialButton(
+        padding: EdgeInsets.only(left: 15.0, right: 15.0),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+        child: Text(buttonText),
+        fillColor: kOrangeCustom,
+        textStyle: TextStyle(
+          color: Colors.white,
+          fontSize: fontSize,
+          fontWeight: FontWeight.bold,
+        ),
+        onPressed: onPressed);
   }
 }
