@@ -1,5 +1,6 @@
 import 'package:carify/screens/register_screen.dart';
 import 'package:carify/utilities/constants.dart';
+import 'package:carify/utilities/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:carify/utilities/size_config.dart';
 import 'package:carify/utilities/extracted_widget.dart';
 import 'package:carify/utilities/user_authentication.dart';
+import 'package:provider/provider.dart';
 import 'package:carify/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -21,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //Fields
   bool showPassword = false;
   String _email, _password;
+  AuthenticationService authenticationService = AuthenticationService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -168,18 +171,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonText: 'Login',
                             fontSize: SizeConfig.safeBlockHorizontal * 5,
                             onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                await login(_email, _password).then((value) {
-                                  if (value != null)
-                                    Navigator.of(context)
-                                        .pushReplacement(MaterialPageRoute(
-                                            builder: (context) => ProfileScreen(
-                                                  user: value.uid,
-                                                )));
-                                });
-                              } else {
-                                print('not validated');
+                              if(_formKey.currentState.validate()){
+                                loading(context);
+                                bool login = await authenticationService.signin(_email, _password);
+                                if(login != null) {
+                                  Navigator.of(context).pop();
+                                  if (!login) print(
+                                      'email and password are wrong');
+                                }
                               }
+                              // print(await authenticationService.user);
+                              // final result = await authenticationService.signinAnonymously
+                              // if(result != null ){
+                              //   print("connected");
+                              //   print(result);
+                              // }else{
+                              //   print("failure");
+                              // }
                             }),
                       ),
                     ],
