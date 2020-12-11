@@ -20,7 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   //Fields
   bool showPassword = false;
   String _email, _password;
-  AuthenticationService _authenticationService;
+  AuthenticationService authenticationService = AuthenticationService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -173,9 +173,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           OutlineButton(
             splashColor: kMidnightBlueCustom,
             onPressed: () async {
-              await _authenticationService.googleSignIn();
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => ProfileScreen()));
+              authenticationService.googleSignIn();
+              Navigator.of(context).pop();
             },
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
@@ -217,10 +216,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 fontSize: SizeConfig.safeBlockHorizontal * 5,
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
-                    await _authenticationService.signUp(
-                        email: _email, password: _password);
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => ProfileScreen()));
+                    bool register = await authenticationService.signup(_email, _password);
+                    if(register) Navigator.of(context).pop();
                   } else {
                     print('not validated');
                   }

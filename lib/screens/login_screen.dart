@@ -1,5 +1,6 @@
 import 'package:carify/screens/register_screen.dart';
 import 'package:carify/utilities/constants.dart';
+import 'package:carify/utilities/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //Fields
   bool showPassword = false;
   String _email, _password;
-  AuthenticationService _authenticationService;
+  AuthenticationService authenticationService = AuthenticationService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -170,22 +171,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonText: 'Login',
                             fontSize: SizeConfig.safeBlockHorizontal * 5,
                             onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                try {
-                                  final user =
-                                      await _authenticationService.login(
-                                          email: _email, password: _password);
-                                  if (user != null) {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ProfileScreen()));
-                                  }
-                                } catch (e) {
-                                  print('mamnou3 d5oul!');
+                              if(_formKey.currentState.validate()){
+                                loading(context);
+                                bool login = await authenticationService.signin(_email, _password);
+                                if(login != null) {
+                                  Navigator.of(context).pop();
+                                  if (!login) print(
+                                      'email and password are wrong');
                                 }
                               }
+                              // print(await authenticationService.user);
+                              // final result = await authenticationService.signinAnonymously
+                              // if(result != null ){
+                              //   print("connected");
+                              //   print(result);
+                              // }else{
+                              //   print("failure");
+                              // }
                             }),
                       ),
                     ],
