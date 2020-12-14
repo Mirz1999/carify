@@ -13,24 +13,37 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  AuthenticationService _authenticationService;
-  @override
-  void initState() {
-    super.initState();
+
+  User user;
+  AuthenticationService authenticationService = AuthenticationService();
+
+  Future<void> getUser()async{
+    final userResult = await authenticationService.user;
+    setState(() {
+      user = userResult;
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
+    getUser();
     return Scaffold(
       body: Center(
-        child: Container(
-          child: RaisedButton(
-              child: Text('bibi bye bye'),
-              onPressed: () {
-                _authenticationService.signOutUser();
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
-              }),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Welcome'),
+            if(user != null)Text('UID: ' + user.uid),
+            Container(
+              child: RaisedButton(
+                  child: Text('bibi bye bye'),
+                  onPressed: () {
+                    authenticationService.signOut();
+                    setState(() {});
+                  }),
+            ),
+          ],
         ),
       ),
     );

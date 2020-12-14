@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:carify/screens/login_screen.dart';
 import 'package:carify/screens/profile_screen.dart';
+import 'package:carify/screens/statusAuth.dart';
 import 'package:carify/utilities/user_authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,8 +18,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User user;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  // User user;
   @override
   void initState() {
     displaySplash();
@@ -27,13 +28,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   displaySplash() {
     Timer(Duration(seconds: 3), () {
-      if (_auth.currentUser != null) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ProfileScreen()));
-      } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginScreen()));
-      }
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Status()));
+      // if (_auth.currentUser != null) {
+      //   Navigator.pushReplacement(
+      //       context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+      // } else {
+      //   Navigator.pushReplacement(
+      //       context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      // }
     });
   }
 
